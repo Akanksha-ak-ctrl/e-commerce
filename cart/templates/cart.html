@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .product-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .product-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-name {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .product-quantity,
+        .product-price {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .remove-button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .remove-button:hover {
+            background-color: #c82333;
+        }
+
+        .total-price {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .continue-shopping {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .continue-shopping:hover {
+            background-color: #0056b3;
+        }
+
+        .checkout-button {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .checkout-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>Your Shopping Cart</h1>
+
+    <ul class="product-list">
+        {% for item in cart_items %}
+        <li class="product-item">
+            <div class="product-details">
+                <div>
+                    <h2 class="product-name">{{ item.product.name }}</h2>
+                    <p class="product-quantity">Quantity: {{ item.quantity }}</p>
+                </div>
+                <div>
+                    <p class="product-price">Price: ${{ item.product.price }}</p>
+                    <a href="{% url 'cart:remove_from_cart' item.id %}" class="remove-button">Remove</a>
+                </div>
+            </div>
+        </li>
+        {% empty %}
+        <li class="product-item">Your cart is empty.</li>
+        {% endfor %}
+    </ul>
+
+    <p class="total-price">Total Price: ${{ total_price }}</p>
+
+    <a href="{% url 'cart:product_list' %}" class="continue-shopping">Continue Shopping</a>
+    <a href="#" class="checkout-button">Checkout</a>
+</div>
+</body>
+
+</html>
